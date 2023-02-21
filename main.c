@@ -17,7 +17,7 @@ void print_array(long long* a, int n);
 long long llabs(long long a);
 
 void bubble_sort(long long* a, int n){
-    int count_swap = 1; // счётчик количества перестановок. Мы должны производить алгоритм до тех пор,
+    int count_swap = 1; // счётчик количества перестановок. Мы должны производить алгоритм до тех пор, ололололо работает русский
                         // пока все элементы не будет упорядоченными, то есть перестановок элементов не будет.
     while(count_swap){
         count_swap = 0;
