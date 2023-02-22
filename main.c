@@ -3,7 +3,7 @@
 #include <math.h>
 
 #define N 10
-#define R 3
+#define R 1
 
 int count_swap1 = 0, count_swap2 = 0;
 int count_comp1 = 0, count_comp2 = 0;
@@ -11,7 +11,6 @@ int count_comp1 = 0, count_comp2 = 0;
 void sorted_fill(long long* a, int n);
 void unsorted_fill(long long* a, int n);
 int is_sorted(long long* a, int n);
-long long* make_copy(long long* a, int n);
 void rand_fill(long long* a, int n);
 void print_array(long long* a, int n);
 long long llabs(long long a);
@@ -61,7 +60,6 @@ void selection_sort(long long* a, int n){
 int main(void)
 {
     long long *a = malloc(N * sizeof(long long));
-
     if (R == 1)
         sorted_fill(a, N);
     else if (R == 2)
@@ -70,17 +68,21 @@ int main(void)
         rand_fill(a, N);
 
     print_array(a, N);
-    long long *a_copy = make_copy(a, N);
+
+    long long *a_copy = malloc(N * sizeof(long long));
+    a_copy = memcpy(a_copy, a, N * sizeof(long long));
 
     bubble_sort(a, N);
     printf("Bubble sort:\n");
-    print_array(a, N);
+//    print_array(a, N);
     printf("comparisons: %d\nassignments: %d\n", count_comp1, count_swap1);
     if (!is_sorted(a, N)) printf("\nError\n");
 
+    printf("\n");
+
     selection_sort(a_copy, N);
     printf("Selection sort:\n");
-    print_array(a_copy, N);
+//    print_array(a_copy, N);
     printf("comparisons: %d\nassignments: %d\n", count_comp2, count_swap2);
     if (!is_sorted(a_copy, N)) printf("\nError\n");
 }
@@ -95,25 +97,20 @@ int is_sorted(long long* a, int n){
     return 1;
 }
 void sorted_fill(long long* a, int n){
+    long long t = rand() * rand() * rand();
     for (int i = 0; i < n; i++){
-        a[i] = pow( -1, (i + 1) % 2) * (i + 1);
+        a[i] = pow( -1, (i + t) % 2) * (i + t);
     }
 }
 void unsorted_fill(long long* a, int n){
-    for (int i = n; i > 0; i++){
-        a[i] = pow( -1, i % 2) * i;
-    }
-}
-long long* make_copy(long long* a, int n){
-    long long *a_copy = malloc(n * sizeof(long long));
+    long long t = rand() * rand() * rand();
     for (int i = 0; i < n; i++){
-        a_copy[i] = a[i];
+        a[i] = pow( -1, (t - i) % 2) * (t - i);
     }
-    return a_copy;
 }
 void rand_fill(long long* a, int n){
     for (int i = 0; i < n; i++){
-        a[i] = pow( -1, rand() % 2) * rand() * rand();
+        a[i] = pow( -1, rand() % 2) * rand() * rand() * rand();
     }
 }
 void print_array(long long* a, int n){
